@@ -47,7 +47,7 @@ $router->get('salaries', function(Request $request) {
 	$client   = new Client();
 	$response = $client->request('GET', 'http://www.guiatrabalhista.com.br/guia/salario_minimo.htm');
 	$bodyCra  = (string) $response->getBody()->getContents();
-	$crawler  = new Crawler($body);
+	$crawler  = new Crawler($bodyCra);
 
 	$rows     = $crawler->filter('table')->first()->filter('tr')->each(function (Crawler $node) {
         return $node->html();
@@ -81,7 +81,7 @@ $router->get('salaries', function(Request $request) {
 	if($format == 'json')
 		return response()->json($data);
 	else
-		return $data;
+		return print_r($data);
 });
 
 $router->get('version', function () use ($router) {
